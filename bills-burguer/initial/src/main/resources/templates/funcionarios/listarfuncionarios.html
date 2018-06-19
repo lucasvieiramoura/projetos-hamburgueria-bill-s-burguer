@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<title>Bill's Burguer - Clientes </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+	<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fliud">
+            <div class="navbar-header" >
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="hello"> Bill's Burguer</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">     
+                    <li>
+                        <a href="novacompra">Vendas</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="listarprodutos" >Produtos
+                        <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="novoproduto">Cadastrar Produto</a></li>
+                            <li><a href="listarprodutos">Listar Produtos</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="listarclientes" >Clientes
+                        <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="novocliente">Cadastrar Cliente</a></li>
+                            <li><a href="listarclientes">Listar Clientes</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown active">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="listarfuncionarios" >Funcionários
+                        <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="novofuncionario">Cadastrar Funcionário</a></li>
+                            <li><a href="listarfuncionarios">Listar Funcionários</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="listarusuarios" > 
+                        Usuários
+                        <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="novousuario">Cadastrar Usuário</a></li>
+                            <li><a href="listarusuarios">Listar Usuários</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Relatórios</a>
+                    </li>
+                </ul>             
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown">
+                        <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="text-uppercase nav-link" th:inline="text">
+                                [[${#httpServletRequest.remoteUser}]]!
+                                </a>
+                                <form class="nav navbar-form" th:action="@{/logout}" method="post" >
+                                    <li>
+                                        <a type="submit" href="/">Sair</a>  
+                                    </li>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Encerramento da barra fixa no topo com os menus disponiveis -->
+    <!-- Texto na parte superior da pagina referente ao tema da pagina -->
+    <div class="container">
+        <div class="col-sm-12" style="margin-top: 5%">
+            <h2>Funcionários</h2>
+            <div>
+                <form action="#" th:action="@{/listarfuncionarios?(nome=${funcionarioPesquisa.nome})}" 
+                    th:object="${funcionarioPesquisa}" method="get">
+                    <div class="form-group">
+                        <div class="col-sm-6 col-md-offset-2">
+                            <div class="input-group h2">
+                                <input type="text" th:field="*{nome}" name="data[search]" class="form-control" id="search" placeholder="Procure pelo Nome do funcionario" >
+                                    <span class="input-group-btn">                              
+                                        <button type="submit" class="btn btn-primary">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </button>
+                                    </span>
+                                </input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <a href="novofuncionario" class="btn btn-primary h2">Cadastrar Funcionário</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-offset-1 col-sm-8" style="margin-top: 2%">
+                <label th:text="${message}" class="alert-info"></label>
+            </div>
+        </div>
+        <div>
+            <h2>Listar Funcionários </h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Bairro</th>
+                        <th>Endereço</th>
+                        <th>Ativo</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="funcionario : ${funcionarios}">
+                        <td th:text="${funcionario.id}"></td>
+                        <td th:text="${funcionario.nome}"></td>
+                        <td th:text="${funcionario.telefone}"></td>
+                        <td th:text="${funcionario.bairro.nome}"></td>
+                        <td th:text="${funcionario.endereco}"></td>
+                        <td th:text="${funcionario.status}"></td>
+                        <td>
+                        <a class="btn btn-warning" th:href="@{'editarfuncionario?id=' + ${funcionario.id}}">Editar</a>
+                        <a class="btn btn-danger" th:href="@{'removerfuncionario?id=' + ${funcionario.id}}">Excluir</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="footer">
+                <div class="pull-right" style="margin-top: 5%">
+                    <a href="hello" class="btn btn-default">Voltar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Spring Security Example</title>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+    </head>
+    <body>
+    	<div class="container" style="margin-top: 15%">
+    		<div align="center">
+		        <h1>Bem vindo ao Bill's Burguer</h1>
+                <h2>Aqui disponibilizaremos o cardapio com as opcoes para que o cliente escolha</h2>
+		        
+		        <p>Clique <a th:href="@{/hello}">aqui</a> para acessar o sistema.</p>
+                 <div class="col-sm-offset-2 col-sm-4">
+                    <div class="col-sm-offset-2" style="margin-top: 5%">
+                       <a th:href="@{/hello}" class="btn btn-default">Logar</a>
+                    </div>
+                </div>
+		    </div>
+	    </div>
+    </body>
+</html>

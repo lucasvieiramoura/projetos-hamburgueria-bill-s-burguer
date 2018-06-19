@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<title>Bill's Burguer - Usuários </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+</head>
+<body>
+	<div class="container-fliud">
+		<div class="contianer-fluid" style="margin-top: 5%">
+			<!-- Barra de Menus Fixada no top de todas as paginas para facil acesso para as outras funcionalidades, sem ficara ativo o item da barra que for referente a barra atual -->
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="navbar-header" >
+                    <a class="navbar-header navbar-brand" href="#">  Bill's Burguer</a>
+                </div>
+                <ul class="nav navbar-nav">     
+                        <li class="nav-item ">
+                            <a class="nav-link " href="#">Vendas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="#">Produtos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="#">Clientes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="#">Funcionários</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="#">Mesas</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link " href="#">Usuários</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="#">Relatórios</a>
+                        </li>
+                </ul>
+                <div class="contianer-fluid navbar-right">
+                    <form class="nav navbar-form" th:action="@{/logout}" method="post" >
+                        <div class="form-group">
+                            <span class="text-uppercase glyphicon glyphicon-user " style="color: gray" 
+                            th:inline="text">
+                                <strong>[[${#httpServletRequest.remoteUser}]]! </strong>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <ul class="nav navbar-nav">  
+                                <button type="submit" class="btn btn-default btn-sm glyphicon glyphicon-off ">
+                                <strong>SAIR</strong>
+                                </button>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+            <div>
+            <!-- A div de usuario esta ocupando a linha completa com o col-sm-10 para que a messagem de alert jogada para a linha debaixo e nao para o canto direito da pagina-->
+        	<div class="col-sm-10 col-md-offset-2">
+        		<h2> Novo Usuário</h2>
+        	</div>
+        	<div class="col-sm-offset-2 col-sm-3 alert alert-info">
+	            	<label th:text="${message}"></label>
+	        </div>
+        	
+        	<form id="formExemplo" action="#" th:aciton="@{'/salvarusuario?username'+ ${usuario.username}}" th:object="${usuario}" method="post" data-toggle="validator" role="form">
+
+        		<!-- Nome de usuario com os campos para prencher os dados -->
+        		<div class="mainbox col-md-10 col-md-offset-2"> 	
+        			<div class="col-sm-4 input-group">
+        				<label for="texNome" class="control-label">Nome: </label>
+        				<input type="text" for="textNome" class="form-control " th:field="{username}" name="username" placeholder="Primeiro Nome do Usuário" required />
+        			</div>
+        		</div>
+
+        		<div class="mainbox col-md-10 col-md-offset-2" > 	
+        			<div class="col-sm-4 input-group">
+        				<label for="texNome" class="control-label">Sobrenome: </label>
+        				<input type="text" for="textNome" class="form-control " th:field="{username}" name="username" placeholder="Primeiro Nome do Usuário" required />
+        			</div>
+        		</div>
+
+        		<!-- Nome de login par ao usuario -->
+        		<div class="mainbox col-md-10 col-md-offset-2" > 	
+        			<div class="col-sm-4 input-group">
+        				<label for="texNome" class="control-label">Usuário: </label>
+        				<div class="input-group">
+	        				<span class="input-group-addon">
+	        					<i class="glyphicon glyphicon-user"></i>
+	        				</span>
+	        				<input type="text" for="textNome" class="form-control " th:field="{username}" name="username" placeholder="Nome de login para o Usuário" required />
+	        			</div>
+        			</div>
+        		</div>
+
+        		<!-- Senha do usuario onde e digitada a primeira vez para registrar -->
+        		<div class="mainbox col-md-10 col-md-offset-2">
+        			<div class="col-sm-4 input-group">
+        				<label for="inputPassword" class="control-label">Senha: </label>
+        					<div class="input-group">
+        						<span class="input-group-addon">
+        							<i class="glyphicon glyphicon-lock"></i>
+        						</span>
+		        				<input type="password" class="form-control" th:field="{senha}" name="senha" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" id="inputPassword" placeholder="Digite sua senha" data-match="#inputPassword" data-match-error="Minino de 6 digitos" required />
+		        				<span class="help-block with-errors"></span>
+		        			</div>
+        			</div>
+        		</div>
+
+        		<!-- Confirmacao da senha do usuario, foram implementados metodos de verificacao JS -->
+        		<div class="mainbox col-md-10 col-md-offset-2">
+        			<div class="col-sm-4 input-group">
+	        				<label for="inputConfirm" class="control-label">Confirme a Senha: </label>
+        				<div class="input-group">
+        					<span class="input-group-addon">
+        						<i class="glyphicon glyphicon-lock"></i>
+        					</span>
+	        				<input type="password" class="form-control" th:field="{senha}" name="senha" id="inputConfirm" placeholder="Confirme a senha" data-match="#inputPassword" data-match-error="As senhas não estão iguais" required />
+	        				<div class="help-block with-errors"></div>
+	        			</div>
+        			</div>
+        		</div>
+
+        		<!-- Botoes para submiter o formulario ou Voltar para a pagina anterior -->
+        		<div class="footer">
+            		<div class="col-sm-offset-4 col-md-4" style="margin-top: 5%;">
+                        <a href="hello" type="button" id="btn-cancelar-novousuario" class="btn btn-default clsButton"> Voltar </a>
+            			<button type="submit" id="btn-cancelar-novousuario" class="btn btn-default clsButton"> Salvar</button>
+                        
+                    </div>
+                </div>
+        	</form>
+
+        </div>
+        </div>
+	</div>
+	<script type="text/javascript" src="/home/lucas/html/bootstrap-validator-master/dist/validator.min.js"></script>
+</body>
+</html>

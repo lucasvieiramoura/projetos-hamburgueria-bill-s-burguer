@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<title>Bill's Burguer - Clientes </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+	    	<div class="container-fliud">
+	            <div class="navbar-header" >
+	            	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+	            		<span class="icon-bar"></span>
+	            		<span class="icon-bar"></span>
+	            		<span class="icon-bar"></span>
+	            		<span class="icon-bar"></span>
+	            	</button>
+	                <a class="navbar-brand" href="hello"> Bill's Burguer</a>
+	            </div>
+	            <div class="collapse navbar-collapse" id="myNavbar">
+	                <ul class="nav navbar-nav">     
+	                    <li class="active">
+	                        <a href="novavenda">Vendas</a>
+	                    </li>
+	                    <li class="dropdown">
+	                        <a class="dropdown-toggle" data-toggle="dropdown" href="listarprodutos" >Produtos
+	                        <span class="caret"></span></a>
+	                        <ul class="dropdown-menu">
+	                            <li><a href="novoproduto">Cadastrar Produto</a></li>
+	                            <li><a href="listarprodutos">Listar Produtos</a></li>
+	                        </ul>
+	                    </li>
+	                    <li class="dropdown">
+	                        <a class="dropdown-toggle" data-toggle="dropdown" href="listarclientes" >Clientes
+	                        <span class="caret"></span></a>
+	                        <ul class="dropdown-menu">
+	                            <li><a href="novocliente">Cadastrar Cliente</a></li>
+	                            <li><a href="listarclientes">Listar Clientes</a></li>
+	                        </ul>
+	                    </li>
+	                    <li class="dropdown">
+	                        <a class="dropdown-toggle" data-toggle="dropdown" href="listarfuncionarios" >Funcionários
+	                        <span class="caret"></span></a>
+	                        <ul class="dropdown-menu">
+	                            <li><a href="novofuncionario">Cadastrar Funcionário</a></li>
+	                            <li><a href="listarfuncionarios">Listar Funcionários</a></li>
+	                        </ul>
+	                    </li>
+	                    <li class="dropdown">
+	                        <a class="dropdown-toggle" data-toggle="dropdown" href="listarusuarios" > 
+	                        Usuários
+	                        <span class="caret"></span></a>
+	                        <ul class="dropdown-menu">
+	                            <li><a href="novousuario">Cadastrar Usuário</a></li>
+	                            <li><a href="listarusuarios">Listar Usuários</a></li>
+	                        </ul>
+	                    </li>
+	                    <li>
+	                        <a href="#">Relatórios</a>
+	                    </li>
+	                </ul>             
+	                <ul class="nav navbar-nav navbar-right">
+	                    <li class="dropdown">
+	                        <a class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown">
+	                        <span class="caret"></span></a>
+	                        <ul class="dropdown-menu">
+	                            <li>
+	                                <a class="text-uppercase nav-link" th:inline="text">
+	                                [[${#httpServletRequest.remoteUser}]]!
+	                                </a>
+	                                <form class="nav navbar-form" th:action="@{/logout}" method="post" >
+	                                    <li>
+	                                        <a type="submit" href="/">Sair</a>  
+	                                    </li>
+	                                </form>
+	                            </li>
+	                        </ul>
+	                    </li>
+	                </ul>
+	            </div>
+	    	</div>
+	    </nav>
+	   	<div class="container"  style="margin-top: 5%">
+	        <div class="col-sm-12">
+	            <div class="col-sm-7">
+	        		<h2>Vendas</h2>
+	        	</div>
+	        	<div class="col-sm-offset-4 col-sm-8">
+                	<span th:text="${message}" class="alert-info"></span>
+            	</div>
+            	<form action="#" th:action="@{'/salvarcompra?id=' + ${compra.id}}" 
+                th:object="${compra}" method="post">
+                
+	                <div class="form-group">
+	                	<div class="col-sm-1">
+	                        <label> Código: </label>
+	                        <input type="number" class="form-control" th:field="*{id}" disabled="true"/>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                	<div class="col-sm-3">
+	                		<label>Cliente:</label>
+	                		<select th:field="*{pedido.cliente.id}" class="form-control">
+	                			<option th:each="cliente : ${clientes}" th:value="${cliente.getId()}"
+	                			th:text="${cliente.getNome()}">Cliente</option>
+	                		</select>
+	                	</div>
+	                </div>
+	                <div class="form-group">
+	                	<div class="col-sm-3">
+	                		<label>Funcionário:</label>
+	                		<select th:field="*{pedido.funcionario.id}" class="form-control">
+	                			<option th:each="funcionario : ${funcionarios}" th:value="${funcionario.getId()}"
+	                			th:text="${funcionario.getNome()}">Funcionário</option>
+	                		</select>
+	                	</div>
+	                </div>
+	                <div class="form-group">
+	                	<div class="col-sm-2">
+	                		<label>Mesa:</label>
+	                		<select th:field="*{pedido.mesa.id}" class="form-control">
+	                			<option th:each="mesa : ${mesas}" th:value="${mesa.getId()}"
+	                			th:text="${mesa.getNumero()}">Mesa</option>
+	                		</select>
+	                	</div>
+	                </div>
+	                <div class="form-group">
+	                	<div class="col-sm-2">
+	                		<label>Pagamento:</label>
+	                		<select th:field="*{pedido.formaDePagamento.id}" class="form-control">
+	                			<option th:each="formaDePagamento : ${formaDePagamentos}" th:value="${formaDePagamento.getId()}" th:text="${formaDePagamento.getNome()}">Pagamento</option>
+	                		</select>
+	                	</div>
+	                </div>
+                </form>
+                <div class="col-sm-8" style="margin-top: 2%">
+                	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Selecionar Produtos</button>
+                	<div class="modal face " id="myModal" role="dialog">
+                		<div class="modal-dialog">
+                			<div class="modal-content">
+                				<div class="modal-header">
+                					<button type="button" class="close" data-dismiss="modal">&times;</button>
+                					<h4 class="modal-title">Lista de Produtos</h4>
+                				</div>
+                				<div class="modal-body">
+						        	<table class="table table-striped">
+						        		<thead>
+						        			<tr>
+						        				<th>Nome</th>
+						        				<th>Preço</th>
+						        				<th>Descrição</th>
+						        				<th>Ações</th>
+						        			</tr>
+						        		</thead>
+						        		<tbody >
+						        			<tr th:each="produto : ${produtos}">
+						        				<td th:text="${produto.nome}"></td>
+						        				<td th:text="${produto.preco}"></td>
+						        				<td th:text="${produto.descricao}"></td>
+						        				<td style="align-items: left" ><a class="btn btn-warning" th:href="@{'editarproduto?id=' + ${produto.id}}">Editar</a></td>
+						        			</tr>
+						        		</tbody>
+						        	</table>
+						        </div>
+					        	<div class="modal-footer">
+					        		<div class="pull-right">
+					        			<a href="hello" class="btn btn-default" data-dismiss="modal">Voltar</a>
+					        		</div>
+					        	</div>
+					        </div>
+				        </div>
+			        </div>
+                </div>
+                <div class="col-sm-12">
+		        	<h2>Lista de Items</h2>
+		        	<table class="table table-striped">
+		        		<thead>
+		        			<tr>
+		        				<th>Código</th>
+		        				<th>Nome</th>
+						        <th>Descrição</th>
+		        				<th>Quantidade</th>
+		        			</tr>
+		        		</thead>
+		        		<tbody >
+		        			<tr th:each="item: ${items}">
+		        				<td th:text="${item.id}"></td>
+		        				<td th:text="${item.produto.nome}"></td>
+		        				<td th:text="${item.produto.descricao}"></td>
+		        				<td th:text="${item.quantidade}"></td>
+		        				<td><a class="btn btn-default">Adicionar</a>
+		        					<a href="#" class="btn btn-info" th:href="novoitem">Novo item</a>
+		        				</td>
+		        			</tr>
+		        		</tbody>
+		        	</table>
+		        </div>
+	        </div>	    	
+	    </div>
+	</body>
+</html>
